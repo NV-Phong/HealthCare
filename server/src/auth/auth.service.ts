@@ -20,4 +20,14 @@ export class AuthService {
       });
       return newUser.save();
    }
+   async login(username: string, password: string) {
+      const user = await this.userModel.findOne({ username });
+      if (user && (await bcrypt.compare(password, user.password))) {
+         const payload = { username: user.username };
+         return {
+            access_token: this.jwtService.sign(payload),
+         };
+      }
+      throw new Error('Invalid credentials');
+   }
 }
