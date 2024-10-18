@@ -1,6 +1,6 @@
+import 'package:client_beta/screens/Register.dart';
 import 'package:flutter/material.dart';
 import '../screens/Login.dart';
-import '../screens/Register.dart';
 
 class AppRoutes {
   static const String login = '/';
@@ -9,7 +9,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes {
     return {
       login: (context) => Login(),
-      register: (context) => Register(),
+      register: (context) => RegisterPage(),
     };
   }
 }
