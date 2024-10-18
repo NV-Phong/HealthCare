@@ -52,16 +52,24 @@ class Login extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/Login');
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: Text('Login'), // Changed to 'Login' for clarity
+              ),
+              SizedBox(height: 10),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/testdata');
+                },
+                child: Text('Test Data'), // Changed to 'Login' for clarity
               ),
               SizedBox(height: 10),
 
               // Optionally, a button for registration
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/Register');
+                  Navigator.pushNamed(context, '/register');
                 },
                 child: Text('Register'),
               ),
