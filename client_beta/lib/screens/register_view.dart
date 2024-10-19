@@ -55,8 +55,8 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => const MyHomePage(
-                title: 'Register',
+          builder: (context) => MyApp(
+              // title: 'Register',
               )),
     );
   }
