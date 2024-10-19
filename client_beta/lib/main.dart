@@ -1,3 +1,4 @@
+import 'package:client_beta/screens/register_view.dart';
 import 'package:flutter/material.dart';
 import 'screens/Login-Screen.dart'; // Đảm bảo rằng bạn đã import file login.dart
 
