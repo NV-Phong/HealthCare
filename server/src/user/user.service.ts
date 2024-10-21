@@ -15,4 +15,9 @@ export class UserService {
    async findByUsername(username: string): Promise<User | null> {
       return this.userModel.findOne({ username }).exec();
    }
+
+   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
+      return this.userModel.findByIdAndUpdate(userId, updateData, { new: true });
+   }
+
 }
