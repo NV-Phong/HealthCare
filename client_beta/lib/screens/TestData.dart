@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,7 +11,7 @@ class DataScreen extends StatefulWidget {
 class _DataScreenState extends State<DataScreen> {
   List<dynamic> _data = [];
   bool _isLoading = true;
-
+  final storage = FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -25,6 +26,8 @@ class _DataScreenState extends State<DataScreen> {
         _data = json.decode(response.body);
         _isLoading = false;
       });
+
+     
     } else {
       throw Exception('Failed to load data');
     }

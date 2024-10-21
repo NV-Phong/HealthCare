@@ -1,5 +1,5 @@
-import 'package:client_beta/screens/Login-Screen.dart';
-import 'package:client_beta/screens/Register.dart';
+// import 'package:client_beta/screens/Login-Screen.dart';
+import 'package:client_beta/screens/register_view.dart';
 import 'package:client_beta/screens/TestData.dart';
 import 'package:flutter/material.dart';
 import '../screens/Login.dart';

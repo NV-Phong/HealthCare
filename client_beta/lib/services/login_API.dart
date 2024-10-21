@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:client_beta/models/user.dart';
+import 'package:client_beta/models/Login-DTO.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -24,6 +24,32 @@ class ApiService {
       // Kiểm tra phản hồi từ server
       if (response.statusCode == 201) {
         print('Đăng ký thành công');
+        return true; // Thành công
+      } else {
+        print('Lỗi: ${response.body}');
+        return false; // Lỗi
+      }
+    } catch (error) {
+      print('Lỗi khi kết nối tới server: $error');
+      return false; // Lỗi kết nối
+    }
+  }
+
+  Future<bool> loginUser(User user) async {
+    final String endpoint = '/auth/login'; // Endpoint của API đăng nhập
+    final Uri url = Uri.parse('$baseUrl$endpoint');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(user.toJson()), // Chuyển dữ liệu thành JSON
+      );
+
+      if (response.statusCode == 200) {
+        print('Đăng nhập thành công');
         return true; // Thành công
       } else {
         print('Lỗi: ${response.body}');

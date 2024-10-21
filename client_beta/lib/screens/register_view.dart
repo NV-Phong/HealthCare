@@ -1,5 +1,5 @@
 import 'package:client_beta/main.dart';
-import 'package:client_beta/models/user.dart';
+import 'package:client_beta/models/Login-DTO.dart';
 import 'package:client_beta/services/login_API.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Tiến hành xử lý đăng ký (ví dụ: gửi dữ liệu lên server)
     // Tạo đối tượng User từ dữ liệu nhập
-    User user = User(username: username, email: email, password: password);
+    User user = User(username: username/*, email: email*/, password: password);
 
     // Gọi API để đăng ký
     bool success = await _apiService.registerUser(user);
