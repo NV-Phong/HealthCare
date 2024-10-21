@@ -20,4 +20,27 @@ export class UserService {
       return this.userModel.findByIdAndUpdate(userId, updateData, { new: true });
    }
 
+   calculateProfileCompletion(user: User): number {
+      // Lấy danh sách các thuộc tính từ schema của User
+      const userSchemaPaths = this.userModel.schema.paths;
+        // Bỏ qua các thuộc tính không cần thiết như '_id', '__v', 'IsDelete', etc.
+      const excludedFields = ['_id', '__v', 'IsDelete', 'usename', 'password']; 
+      const requiredFields = Object.keys(userSchemaPaths).filter(
+        field => !excludedFields.includes(field)
+      );
+        // Đếm số thuộc tính đã được điền
+      let filledFields = 0;
+      for (const field of requiredFields) {
+        if (user[field] !== null && user[field] !== undefined && user[field] !== '') {
+          filledFields++;
+        }
+      }
+        // Tính toán phần trăm hoàn thành
+      const completionPercentage = (filledFields / requiredFields.length) * 100;
+  
+      return completionPercentage;
+    }
+    async findById(userId: string): Promise<User | null> {
+      return this.userModel.findById(userId).exec();
+    }
 }
