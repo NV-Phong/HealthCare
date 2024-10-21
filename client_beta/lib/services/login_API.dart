@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:client_beta/models/Login-DTO.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = 'http://localhost:3000'; // Đặt URL của server API
+  final String baseUrl = '${dotenv.env['LOCALHOST']}'; // Đặt URL của server API
 
   // Phương thức đăng ký
   Future<bool> registerUser(User user) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,15 +20,13 @@ class _DataScreenState extends State<DataScreen> {
   }
 
   Future<void> _fetchData() async {
-    final response = await http.get(Uri.parse('http://localhost:3000/user'));
-
+    final response =
+        await http.get(Uri.parse('${dotenv.env['LOCALHOST']}/user'));
     if (response.statusCode == 200) {
       setState(() {
         _data = json.decode(response.body);
         _isLoading = false;
       });
-
-     
     } else {
       throw Exception('Failed to load data');
     }
