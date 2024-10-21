@@ -5,7 +5,7 @@ async function bootstrap() {
    const app = await NestFactory.create(AppModule);
    app.enableCors({
       origin: (origin, callback) => {
-         if (!origin || origin.startsWith('http://localhost')) {
+         if (!origin || origin.startsWith(process.env.LOCALHOST)) {
             callback(null, true);
          } else {
             callback(new Error('Not allowed by CORS'));
