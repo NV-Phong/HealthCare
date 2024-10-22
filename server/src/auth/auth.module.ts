@@ -6,6 +6,7 @@ import { AuthController } from './auth.controller';
 import { User, UserSchema } from 'src/schema/user.schema';
 import { UserService } from 'src/user/user.service';
 import { JwtStrategy } from 'src/configuration/jwt.strategy';
+import { DiseaseModule } from 'src/disease/disease.module';
 
 @Module({
    imports: [
@@ -14,6 +15,7 @@ import { JwtStrategy } from 'src/configuration/jwt.strategy';
          secret: 'Ng7633nxVa2nPh9ngM8nhDD72cs',
          signOptions: { expiresIn: '7d' },
       }),
+      DiseaseModule
    ],
    providers: [AuthService,JwtStrategy, UserService],
    controllers: [AuthController],
