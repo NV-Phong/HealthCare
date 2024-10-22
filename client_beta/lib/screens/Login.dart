@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:client_beta/services/login_API.dart'; // Đảm bảo bạn đã nhập đúng đường dẫn đến ApiService
-import 'package:client_beta/models/Login-DTO.dart'; // Nhập mô hình User nếu bạn sử dụng
+// import 'package:client_beta/services/login_API.dart'; // Đảm bảo bạn đã nhập đúng đường dẫn đến ApiService
+// import 'package:client_beta/models/Login-DTO.dart'; // Nhập mô hình User nếu bạn sử dụng
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:client_beta/services/flutter_secure_storage.dart';
+import '../services/api_service.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -9,43 +12,34 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final SecureStorageService _secureStorageService = SecureStorageService();
   final TextEditingController _usernameController = TextEditingController();
   // final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final ApiService apiService = ApiService();
+  final ApiService _apiService = ApiService('${dotenv.env['LOCALHOST']}');
   final storage = FlutterSecureStorage();
   Future<void> login() async {
     // Lấy dữ liệu từ TextField
-    String username = _usernameController.text;
+    final username = _usernameController.text;
     // String email = _emailController.text;
-    String password = _passwordController.text;
+    final password = _passwordController.text;
 
-    //Tạo đối tượng User (nếu cần)
-    User user = User(
-        username: username,
-        // email: email,
-        password: password); // Đảm bảo bạn đã định nghĩa lớp User
+    // Gọi API để đăng nhập
+    String? token = await _apiService.loginUser(username, password);
+    if (token != null) {
+      // Xử lý khi đăng nhập thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng nhập thành công! Token: $token')),
+      );
 
-    //Gọi phương thức đăng nhập
-    bool success =
-        await apiService.loginUser(user); // Gọi phương thức từ ApiService
-
-    if (success) {
-      // String Token = await apiService.loginUser(user);
-      Future<void> saveToken(String token) async {
-        await storage.write(key: 'access_token', value: token);
-      }
-
-      // Đăng nhập thành công, điều hướng đến trang chính hoặc hiển thị thông báo
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Đăng nhập thành công')));
-      // Bạn có thể điều hướng đến trang chính ở đây
-      Navigator.pushNamed(context,
-          '/testdata'); // Điều hướng đến trang chính sau khi đăng nhập thành công
+      // Có thể chuyển hướng sang màn hình khác hoặc lưu token
+      await _secureStorageService.saveToken(token);
+      Navigator.pushNamed(context, '/testdata');
     } else {
-      // Đăng nhập không thành công, hiển thị thông báo lỗi
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Đăng nhập thất bại')));
+      // Xử lý khi đăng nhập thất bại
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng nhập thất bại!')),
+      );
     }
   }
 
@@ -80,22 +74,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               SizedBox(height: 20),
-              //Email Input
-              // Container(
-              //   width: 300, // Đặt chiều rộng cho TextField
-              //   child: TextField(
-              //     controller: _emailController,
-              //     decoration: InputDecoration(
-              //       labelText: 'Email',
-              //       border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(7), // Góc bo tròn
-              //         borderSide: BorderSide(),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: 20),
-              // Password Input
+
               Container(
                 width: 300, // Đặt chiều rộng cho TextField
                 child: TextField(
