@@ -1,4 +1,4 @@
-import 'package:client_beta/services/api_service.dart';
+// import 'package:client_beta/services/api_service.dart';
 import 'package:client_beta/services/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +13,7 @@ class _DataScreenState extends State<DataScreen> {
   final SecureStorageService _secureStorageService = SecureStorageService();
   List<dynamic> _data = [];
   bool _isLoading = true;
-
+  // final storage = FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -21,7 +21,7 @@ class _DataScreenState extends State<DataScreen> {
   }
 
   Future<void> _fetchData() async {
-    final ApiService _apiService = ApiService();
+    // final ApiService _apiService = ApiService();
     String? token = await _secureStorageService.getToken();
 
     if (token == null) {
