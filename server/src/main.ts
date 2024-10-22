@@ -3,15 +3,17 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
    const app = await NestFactory.create(AppModule);
-
-   // Tùy chỉnh cấu hình CORS
    app.enableCors({
-      origin: '*', // Chỉ cho phép nguồn gốc cụ thể
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Các phương thức được phép
-      // allowedHeaders: 'Content-Type, Authorization', // Các header được phép
-      credentials: true, // Cho phép cookies hoặc các thông tin xác thực
+      origin: (origin, callback) => {
+         if (!origin || origin.startsWith('http://localhost')) {
+            callback(null, true);
+         } else {
+            callback(new Error('Not allowed by CORS'));
+         }
+      },
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
    });
-
    await app.listen(3000);
 }
 bootstrap();
