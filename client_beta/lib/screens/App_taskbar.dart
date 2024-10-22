@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../services/api_service.dart';
 
 class AppTaskbar extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class AppTaskbar extends StatefulWidget {
 
 class _TaskbarState extends State<AppTaskbar> {
   final storage = FlutterSecureStorage();
+  final ApiService _apiService = ApiService('${dotenv.env['LOCALHOST']}');
   String username = '';
   String email = '';
   String avatarUrl =
@@ -76,8 +78,9 @@ class _TaskbarState extends State<AppTaskbar> {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Đăng xuất'),
-            onTap: () {
-              Navigator.pushNamed(context, '/logout');
+            onTap: () async {
+              await _apiService.logout();
+              Navigator.pushReplacementNamed(context, '/');
             },
           ),
         ],
