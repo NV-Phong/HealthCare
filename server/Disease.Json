@@ -1,0 +1,28 @@
+[
+    {
+        "Disease": "Tiểu Đường",
+        "ListQuestion": [
+            "Bạn có những dấu hiệu gì ?",
+            "Tần suất tiểu của bạn trong 1 ngày là bao nhiêu lần ?",
+            "Bạn có gặp bất kỳ triệu chứng nào như khát nước, tiểu nhiều hay mệt mỏi không ?",
+            "Bạn có thường xuyên tập thể dục không? Nếu có, bạn đã tập luyện bao nhiêu lần trong tuần?",
+            "Bạn có bất kỳ vấn đề sức khỏe nào khác như cao huyết áp hoặc cholesterol cao không?"
+        ]
+    },
+    {
+        "Disease": "Dạ dày , đường ruột",
+        "ListQuestion": [
+            "Bạn có thường xuyên gặp các triệu chứng như đau bụng, khó tiêu hoặc ợ chua không?",
+            "Bạn có nhận thấy bất kỳ thay đổi nào trong thói quen ăn uống hoặc cảm giác thèm ăn của mình không?",
+            "Bạn có sử dụng thuốc hoặc liệu pháp nào để kiểm soát triệu chứng của bệnh dạ dày đường ruột không? Nếu có, hãy cho biết tên thuốc và liều lượng bạn đang dùng.",
+            "Bạn có gặp khó khăn gì trong việc tiêu hóa thức ăn, chẳng hạn như đầy hơi, buồn nôn hoặc tiêu chảy không?",
+            "Bạn có thường xuyên đi khám bác sĩ hoặc thực hiện các xét nghiệm để theo dõi tình trạng bệnh không? Nếu có, kết quả gần đây của bạn là gì?"
+        ]
+    },
+    {
+        "Disease": "Anh Moiii ( Thần Kinh Giai Đoạn Cuôi )",
+        "ListQuestion": [
+            "Bệnh Không chữa trị được vuiii lòng outtt ứng dung !!!!"
+        ]
+    }
+]
