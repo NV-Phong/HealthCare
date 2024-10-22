@@ -34,8 +34,7 @@ class ApiService {
     }
   }
 
-  // Future<void> logout() async {
-  //   _secureStorageService.removeToken();
-  //   Navigator.of(context).pushReplacementNamed('/');
-  // }
+  Future<void> logout() async {
+    _secureStorageService.removeToken();
+  }
 }

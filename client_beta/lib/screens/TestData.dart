@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:client_beta/services/flutter_secure_storage.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import '../services/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,6 +15,7 @@ class DataScreen extends StatefulWidget {
 
 class _DataScreenState extends State<DataScreen> {
   final SecureStorageService _secureStorageService = SecureStorageService();
+  // final ApiService _apiService = ApiService('${dotenv.env['LOCALHOST']}');
   List<dynamic> _data = [];
   bool _isLoading = true;
   String? _token;
@@ -54,6 +56,15 @@ class _DataScreenState extends State<DataScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Data Screen'),
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.logout),
+        //     onPressed: () async {
+        //       await _apiService.logout();
+        //       Navigator.pushReplacementNamed(context, '/');
+        //     },
+        //   ),
+        // ],
       ),
       drawer: AppTaskbar(),
       body: _isLoading
