@@ -22,10 +22,12 @@ export class AuthService {
       });
       return newUser.save();
    }
+
+   // Cần sửa lại phương thức Seed Data
    async login(username: string, password: string) {
       const user = await this.userModel.findOne({ username });
       if (user && (await bcrypt.compare(password, user.password))) {
-         await this.diseaseService.importDiseasesFromJson('Disease.json');
+         await this.diseaseService.importDiseasesFromJson('system-data/Disease.json');
          const payload = { username: user.username };
          return {
             access_token: this.jwtService.sign(payload),

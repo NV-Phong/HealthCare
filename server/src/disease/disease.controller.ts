@@ -20,6 +20,6 @@ export class DiseaseController {
     }
     @Get('import') // Endpoint để import dữ liệu từ JSON
     async import(): Promise<void> {
-        await this.diseaseService.importDiseasesFromJson('Disease.Json'); // Đường dẫn đến file JSON
+        await this.diseaseService.importDiseasesFromJson('system-data/Disease.Json'); // Đường dẫn đến file JSON
     }
 }
