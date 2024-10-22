@@ -24,7 +24,7 @@ export class UserService {
       // Lấy danh sách các thuộc tính từ schema của User
       const userSchemaPaths = this.userModel.schema.paths;
         // Bỏ qua các thuộc tính không cần thiết như '_id', '__v', 'IsDelete', etc.
-      const excludedFields = ['_id', '__v', 'IsDelete', 'usename', 'password']; 
+      const excludedFields = ['_id', '__v', 'IsDelete', 'username', 'password']; 
       const requiredFields = Object.keys(userSchemaPaths).filter(
         field => !excludedFields.includes(field)
       );

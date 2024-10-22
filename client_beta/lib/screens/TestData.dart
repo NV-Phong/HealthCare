@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:client_beta/services/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'App_taskbar.dart';
 
 class DataScreen extends StatefulWidget {
   @override
@@ -10,9 +13,11 @@ class DataScreen extends StatefulWidget {
 }
 
 class _DataScreenState extends State<DataScreen> {
+  final SecureStorageService _secureStorageService = SecureStorageService();
   List<dynamic> _data = [];
   bool _isLoading = true;
-  final storage = FlutterSecureStorage();
+  String? _token;
+  // final storage = FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -20,8 +25,20 @@ class _DataScreenState extends State<DataScreen> {
   }
 
   Future<void> _fetchData() async {
-    final response =
-        await http.get(Uri.parse('${dotenv.env['LOCALHOST']}/user'));
+    String? token = await _secureStorageService.getToken();
+
+    if (token == null) {
+      throw Exception('No token found');
+    }
+
+    _token = token;
+    final response = await http.get(
+      Uri.parse('${dotenv.env['LOCALHOST']}/user'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
     if (response.statusCode == 200) {
       setState(() {
         _data = json.decode(response.body);
@@ -38,16 +55,31 @@ class _DataScreenState extends State<DataScreen> {
       appBar: AppBar(
         title: Text('Data Screen'),
       ),
+      drawer: AppTaskbar(),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _data.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_data[index]['username']),
-                  subtitle: Text(_data[index]['password']),
-                );
-              },
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _data.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(_data[index]['username']),
+                        subtitle: Text(_data[index]['password']),
+                      );
+                    },
+                  ),
+                ),
+                if (_token != null) // Hiển thị token nếu tồn tại
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Token: $_token',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+              ],
             ),
     );
   }
