@@ -17,7 +17,7 @@ export class UserService {
    }
 
    async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
-      return this.userModel.findByIdAndUpdate(userId, updateData, { new: true });
+      return this.userModel.findByIdAndUpdate(userId, updateData, { new: true }).select('_id __v password IsDelete');
    }
 
    calculateProfileCompletion(user: User): number {

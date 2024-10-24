@@ -67,6 +67,21 @@ class ApiService {
     }
   }
 
+  Future<void> updateUser(String token, Map<String, dynamic> updatedUserData) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/user/update'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(updatedUserData),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update user');
+    }
+  }
+
   Future<void> logout() async {
     _secureStorageService.removeToken();
   }
