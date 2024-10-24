@@ -43,4 +43,8 @@ export class UserService {
     async findById(userId: string): Promise<User | null> {
       return this.userModel.findById(userId).exec();
     }
+
+    async getUserProfile(userId: string): Promise<User> {
+      return await this.userModel.findById(userId).select('-password -_id -__v');
+    }
 }
