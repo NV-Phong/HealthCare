@@ -50,4 +50,12 @@ export class UserController {
          await this.userService.calculateProfileCompletion(user);
       return { completion };
    }
+
+   @Get('profile')
+  async getProfile(@Req() req: Request) {
+    // Lấy user từ request đã được giải mã thông qua JWT Guard
+    const user: any = req.user;
+    //const userId = user._id;
+    return await this.userService.getUserProfile(user.id);
+  }
 }
