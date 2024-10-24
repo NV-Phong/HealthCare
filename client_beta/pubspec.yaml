@@ -28,7 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-
+   jwt_decode: ^0.3.1
    http: ^1.2.2
    flutter_secure_storage: ^9.2.2
    flutter_dotenv: ^5.0.2
