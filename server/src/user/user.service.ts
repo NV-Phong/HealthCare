@@ -17,7 +17,7 @@ export class UserService {
    }
 
    async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
-      return this.userModel.findByIdAndUpdate(userId, updateData, { new: true });
+      return this.userModel.findByIdAndUpdate(userId, updateData, { new: true }).select('_id __v password IsDelete');
    }
 
    calculateProfileCompletion(user: User): number {
@@ -42,5 +42,9 @@ export class UserService {
     }
     async findById(userId: string): Promise<User | null> {
       return this.userModel.findById(userId).exec();
+    }
+
+    async getUserProfile(userId: string): Promise<User> {
+      return await this.userModel.findById(userId).select('-password -_id -__v');
     }
 }
