@@ -57,7 +57,7 @@ export class AuthService {
 
    generateRefreshToken(user: UserDocument) {
       const payload = { username: user.username };
-      return this.jwtService.sign(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '1d' });
+      return this.jwtService.sign(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '30d' });
    }
 
    // Phương thức để xác thực Refresh Token

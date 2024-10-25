@@ -36,7 +36,33 @@ class ApiService {
     }
   }
 
-  Future<bool> loginUser(User user) async {
+  // Future<bool> loginUser(User user) async {
+  //   final String endpoint = '/auth/login'; // Endpoint của API đăng nhập
+  //   final Uri url = Uri.parse('$baseUrl$endpoint');
+
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: jsonEncode(user.toJson()), // Chuyển dữ liệu thành JSON
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       print('Đăng nhập thành công');
+  //       return true; // Thành công
+  //     } else {
+  //       print('Lỗi: ${response.body}');
+  //       return false; // Lỗi
+  //     }
+  //   } catch (error) {
+  //     print('Lỗi khi kết nối tới server: $error');
+  //     return false; // Lỗi kết nối
+  //   }
+  // }
+
+  Future<Map<String, String>?> loginUser(User user) async {
     final String endpoint = '/auth/login'; // Endpoint của API đăng nhập
     final Uri url = Uri.parse('$baseUrl$endpoint');
 
@@ -50,15 +76,23 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
+        // Phân tích phản hồi từ server
+        final data = jsonDecode(response.body);
+        String accessToken = data['access_token'];
+        String refreshToken = data['refresh_token'];
+
         print('Đăng nhập thành công');
-        return true; // Thành công
+        return {
+          'accessToken': accessToken,
+          'refreshToken': refreshToken,
+        }; // Trả về token
       } else {
         print('Lỗi: ${response.body}');
-        return false; // Lỗi
+        return null; // Lỗi đăng nhập
       }
     } catch (error) {
       print('Lỗi khi kết nối tới server: $error');
-      return false; // Lỗi kết nối
+      return null; // Lỗi kết nối
     }
   }
 }

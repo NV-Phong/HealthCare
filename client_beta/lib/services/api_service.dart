@@ -10,28 +10,32 @@ class ApiService {
   ApiService(this.baseUrl);
 
   // Hàm đăng nhập người dùng
-  Future<String?> loginUser(String username, String password) async {
-    print(this.baseUrl + '/auth/login');
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/login'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        'username': username,
-        'password': password,
-      }),
-    );
+  Future<Map<String, String>?> loginUser(
+      String username, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/auth/login'),
+        body: jsonEncode({'username': username, 'password': password}),
+        headers: {'Content-Type': 'application/json'},
+      );
 
-    if (response.statusCode == 201) {
-      // Giả sử JWT token được trả về trong body của response
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      return responseData[
-          'access_token']; // Trả về token nếu đăng nhập thành công
-    } else {
-      // Trả về null nếu đăng nhập thất bại
-      return null;
+      if (response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        String accessToken = data['access_token'];
+        String refreshToken = data['refresh_token'];
+
+        return {
+          'accessToken': accessToken,
+          'refreshToken': refreshToken,
+        };
+      } else {
+        print('Login failed: ${response.body}');
+      }
+    } catch (e) {
+      print('Error during login: $e');
     }
+
+    return null; // Nếu đăng nhập thất bại
   }
 
   // Hàm lấy tỷ lệ hoàn thành
@@ -67,7 +71,8 @@ class ApiService {
     }
   }
 
-  Future<void> updateUser(String token, Map<String, dynamic> updatedUserData) async {
+  Future<void> updateUser(
+      String token, Map<String, dynamic> updatedUserData) async {
     final response = await http.put(
       Uri.parse('$baseUrl/user/update'),
       headers: {
