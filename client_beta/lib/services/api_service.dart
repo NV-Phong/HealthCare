@@ -88,6 +88,12 @@ class ApiService {
   }
 
   Future<void> logout() async {
-    _secureStorageService.removeToken();
+    try {
+      await _secureStorageService.removeAccessToken();
+      await _secureStorageService.removeRefreshToken();
+      print('Logged out successfully');
+    } catch (e) {
+      print(' logout error: $e');
+    }
   }
 }

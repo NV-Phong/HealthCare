@@ -25,7 +25,11 @@ class SecureStorageService {
   }
 
   // Xóa token khỏi Secure Storage
-  Future<void> removeToken() async {
-    await _secureStorage.delete(key: 'jwt_token');
+  Future<void> removeAccessToken() async {
+    await _secureStorage.delete(key: 'access_token');
+  }
+
+  Future<void> removeRefreshToken() async {
+    await _secureStorage.delete(key: 'refresh_token');
   }
 }
