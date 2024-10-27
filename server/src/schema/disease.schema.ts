@@ -11,6 +11,7 @@ export class Disease {
 
    @Prop({ type: Map, of: String, required: true })
    ListQuestion: Record<string, string>;
+
 }
 
 export const DiseaseSchema = SchemaFactory.createForClass(Disease);

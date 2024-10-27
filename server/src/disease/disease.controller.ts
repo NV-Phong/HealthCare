@@ -22,4 +22,6 @@ export class DiseaseController {
     async import(): Promise<void> {
         await this.diseaseService.importDiseasesFromJson('system-data/Disease.Json'); // Đường dẫn đến file JSON
     }
+
+    
 }

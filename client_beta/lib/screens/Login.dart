@@ -18,30 +18,40 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
   final ApiService _apiService = ApiService('${dotenv.env['LOCALHOST']}');
   final storage = FlutterSecureStorage();
-  Future<void> login() async {
-    // Lấy dữ liệu từ TextField
-    final username = _usernameController.text;
-    // String email = _emailController.text;
-    final password = _passwordController.text;
 
-    // Gọi API để đăng nhập
-    String? token = await _apiService.loginUser(username, password);
-    if (token != null) {
-      // Xử lý khi đăng nhập thành công
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Đăng nhập thành công! Token: $token')),
-      );
 
-      // Có thể chuyển hướng sang màn hình khác hoặc lưu token
-      await _secureStorageService.saveToken(token);
-      Navigator.pushNamed(context, '/testdata');
-    } else {
-      // Xử lý khi đăng nhập thất bại
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Đăng nhập thất bại!')),
-      );
-    }
+ Future<void> login() async {
+  // Lấy dữ liệu từ TextField
+  final username = _usernameController.text;
+  final password = _passwordController.text;
+
+  // Gọi API để đăng nhập và lấy cả access token và refresh token
+  Map<String, String>? tokens = await _apiService.loginUser(username, password);
+  
+  if (tokens != null) {
+    // Lấy access token và refresh token từ phản hồi của API
+    String accessToken = tokens['accessToken']!;
+    String refreshToken = tokens['refreshToken']!;
+
+    // Hiển thị thông báo đăng nhập thành công
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Đăng nhập thành công!')),
+    );
+
+    // Lưu cả access token và refresh token vào storage
+    await _secureStorageService.saveToken(accessToken);
+    await _secureStorageService.saveRefreshToken(refreshToken);
+
+    // Chuyển hướng sang màn hình khác
+    Navigator.pushNamed(context, '/testdata');
+  } else {
+    // Xử lý khi đăng nhập thất bại
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Đăng nhập thất bại!')),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
