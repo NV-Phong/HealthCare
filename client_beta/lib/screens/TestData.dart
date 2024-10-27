@@ -147,6 +147,18 @@ class _DataScreenState extends State<DataScreen> {
                     },
                   ),
                 ),
+                 Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/disease',
+                      );
+                    },
+                    child: Text('Xem danh sách bệnh'),
+                  ),
+                ),
                 if (_accessToken != null && _refreshToken != null)
                   Padding(
                     padding: const EdgeInsets.all(8.0),
