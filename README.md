@@ -1,0 +1,1 @@
+![Day by Day](./client/thumbnail/HealthCare.svg)
