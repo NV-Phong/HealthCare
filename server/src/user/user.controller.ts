@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/configuration/jwt-auth.guard';
 import { Request } from 'express';
 
-@Controller('user')
+@Controller('testu')
 @UseGuards(JwtAuthGuard)
 export class UserController {
    constructor(private readonly userService: UserService) {}
