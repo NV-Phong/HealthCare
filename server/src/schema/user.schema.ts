@@ -10,6 +10,21 @@ export class User {
 
    @Prop({ required: true })
    password: string;
+
+   @Prop()
+   email: string;
+
+   @Prop()
+   birthOfDate: Date;
+
+   @Prop()
+   gender: string; 
+
+   @Prop()
+   avatar: string; 
+
+   // @Prop()
+   //  refreshToken: string; // Lưu refresh token
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
